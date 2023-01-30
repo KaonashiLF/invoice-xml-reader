@@ -1,20 +1,70 @@
+# Invoice reader with Python
+
 import xml.etree.ElementTree as ET
-from xmlreader import xmlfile
+import pandas as pd
 
 
 
 
 xmlfile = r"I:\\Documentos\\Programacao\\Repos\\GitHub\\invoice-xml-reader\\xmlfile.xml"
 
+
+# This block of is working correctly
+with open(xmlfile, mode='r') as file:
+    for row in file:
+        # print(row)
+        if 'vNF' in row:
+            row = row.replace(' ', '')
+            row = row.replace('\n', '')
+            row = row.replace("<vNF>","")
+            row = row.replace("</vNF>","")
+            row = float(row)
+            
+            
+
+# Made by: Lucas Francisco
+# GitHub: https://github.com/KaonashiLF
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
+#                           Not working code yet
+# =============================================================================
+
+
+
+
+# This probabily works but I will try it again later
+# Problem: I can't iterate child nodes of each tag. Probabily the problem is tag name
+
 tree = ET.parse(xmlfile)
 root = tree.getroot()
-
-for child in root.findall('nfeProc'):
-    second_node = child.find('NFe')
-    third_node = second_node.find('infNFe')
+option = 0
+what = None
+for child in root:
+    tag = child.findall('NFe')
+    attrs = child.attrib
     
-    total_node = third_node.find('total')
-    icms_values = total_node.find('ICMSTot')
     
-    total_product_price = icms_values.find('vNF').text
-    print(total_product_price)
+    while option == 1:
+        what = str(input('Press "T" for Tag and "A" for attributes:\n'))
+        if what.lower() == 't':
+            print(f'Tag:\n{child.tag}')
+        elif what.lower() == 'a':
+            print(f'Attributes: \n{child.attrib}')
+        else:
+            print('Wrong answer, execute it again.')
+            what = None
+            option = 0
+            
+            
