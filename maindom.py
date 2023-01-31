@@ -19,8 +19,26 @@ with open(xmlfile, mode='r') as file:
             row = row.replace("<vNF>","")
             row = row.replace("</vNF>","")
             row = float(row)
-            
-            
+
+
+model_dataframe = {
+    "Product":[],
+    "Price":[],
+    "InvoiceNumber":[],
+    "TotalTax":[],
+    "Date": []
+}
+
+
+df = pd.DataFrame(model_dataframe)
+
+def insert_new_value( product,price, invoicenumber,totaltax, date):
+    
+    # The idea is this function insert new value into df 
+    df.insert(product,price, invoicenumber,totaltax, date)
+    print(df)
+
+insert_new_value('product','price', 'invoicenumber','totaltax', 'date')
 
 # Made by: Lucas Francisco
 # GitHub: https://github.com/KaonashiLF
